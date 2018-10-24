@@ -287,3 +287,85 @@ a & b
 
 [x*x for x in b if x > 3]
 
+## functions
+
+# variables defined within the function are local to the function
+# unless the global keyword is used (this is discouraged)
+# functions can access and modify global variables.
+
+# can return multiple values (they will be returned as a tuple)
+
+# functions are objects, so you can create a list of them and iterate over them.
+
+# lambda keyword defines autonomous functions
+
+
+def apply_to_list(some_list, f):
+    return [f(x) for x in some_list]
+
+
+ints = [4, 0, 1, 5, 6]
+apply_to_list(ints, lambda x: x * 2)
+
+# generators: functions that create an iterable.  Use `yield` instead of `return` in a function
+# or use a generator expression.  Like a comprehension, but used curved instead of square brackets
+
+# itertools has useful functions
+
+import itertools
+
+first_letter = lambda x: x[0]
+
+names = ['Alan', 'Adam', 'Wes', 'Will', 'Albert', 'Steven']
+
+
+for letter, grouped_names in itertools.groupby(names, first_letter):
+    print(letter, list(grouped_names)) # grouped_names is a generator
+
+# note that A comes up twice, so need to sort?
+
+for letter, grouped_names in itertools.groupby(sorted(names), first_letter):
+    print(letter, list(grouped_names)) # names is a generator
+
+a = list(range(0,3))
+
+a    
+
+#preserved order
+list(itertools.combinations(a, 3))
+list(itertools.combinations(a, 2))
+
+list(itertools.permutations(a, 3))
+
+list(itertools.product('abc',a))
+
+## exceptions
+# so much better than R!
+
+def attempt_float(x):
+    try:
+        return float(x)
+    except ValueError:
+        return x
+
+attempt_float('123')        
+
+attempt_float('test')
+
+attempt_float((1,2,3))
+
+## files
+
+path = 'examples/segismundo.txt'
+
+f = open(path)
+
+for line in f:
+    print(line)
+
+lines = [x.rstrip() for x in open(path)]    
+
+lines
+
+f.close()
+
