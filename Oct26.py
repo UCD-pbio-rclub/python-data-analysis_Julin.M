@@ -282,3 +282,8 @@ a & b
 
 # plus many methods...
 
+## comprehensions
+# form a new list by filtering elements of a collection.
+
+[x*x for x in b if x > 3]
+
