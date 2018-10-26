@@ -14,6 +14,34 @@ b
 
 a
 
+c = list(a)
+
+c
+
+c.append(20)
+
+c
+
+a
+
+d = list(a)
+
+a
+
+b
+
+d   
+
+a is b
+
+a is d 
+
+a == b
+
+a == d 
+
+iter(5)
+
 # wow!
 
 def append_element(some_list, element):
@@ -21,9 +49,11 @@ def append_element(some_list, element):
     
 data = [1, 2, 3]    
 
-append_element(data, 4)
+output = append_element(data, 4)
 
 data
+
+output
 
 ## but this seems to contradict the statement in the book "If you bing a new object to a variable inside a function that change will not be reflected in the parent scope"
 

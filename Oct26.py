@@ -179,6 +179,13 @@ seq[4:4] = [10,11]
 
 seq
 
+seq[4:7] = [20, 21, 22, 23, 24]
+
+seq
+
+seq.insert(8, (30, 31, 32, 33))
+
+seq
 # negative indicies indicates index relative to end
 
 seq[-2:]
@@ -368,4 +375,16 @@ lines = [x.rstrip() for x in open(path)]
 lines
 
 f.close()
+
+
+a = []
+def func():
+    for i in range(5):
+        a.append(i)
+        
+a
+
+func()
+
+a
 
