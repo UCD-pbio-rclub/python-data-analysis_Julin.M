@@ -26,3 +26,26 @@ data.shape
 
 data.dtype
 
+# np.meshgrid
+
+points = np.array(range(5))
+
+points
+
+xs, ys = np.meshgrid(points, points)
+
+xs
+
+ys
+
+points2 = np.array(range(7,9))
+
+xs, ys = np.meshgrid(points,points2)
+
+xs
+
+ys
+
+
+
+
