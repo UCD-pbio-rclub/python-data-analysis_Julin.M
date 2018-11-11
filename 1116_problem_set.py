@@ -65,11 +65,26 @@ data[0:5, 0:5]
 
 # Q7: Make a new array that only retains genes that are expressed at > 10 cpm in at least half the samples.  (I haven't checked, maybe all genes will pass)
 
+data_boolean10cpm = data > 10
 
+data_boolean10cpm[0:5, 0:5]
 
+data_gt10cpm_keep = data_boolean10cpm.mean(1) > 0.5
+
+data_gt10cpm_keep
+
+data_small = data[data_gt10cpm_keep, :]
+
+data_small.shape
+
+data_small[0:5, 0:5]
 # Q8 calculate the standard deviation for each gene using the builtin function
 
+data.std(1)
+
 # Q9 calculate the standard deviation for each gene WITHOUT using the builtin function
+
+
 
 # Q10 create a slice that contains the first 10 samples
 
