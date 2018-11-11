@@ -53,9 +53,19 @@ data3.mean(0)
 
 # Q5: what is the total number of unique values in the table?
 
+np.unique(data).shape
+
 # Q6: Make a new array in which any cell that has less than 10 cpm is replaced with 0
 
+data4 = np.where(data < 10, 0, data)
+
+data4[0:5, 0:5]
+
+data[0:5, 0:5]
+
 # Q7: Make a new array that only retains genes that are expressed at > 10 cpm in at least half the samples.  (I haven't checked, maybe all genes will pass)
+
+
 
 # Q8 calculate the standard deviation for each gene using the builtin function
 
