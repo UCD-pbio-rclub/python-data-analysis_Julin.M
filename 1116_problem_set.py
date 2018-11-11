@@ -16,7 +16,17 @@ data.shape
 
 # Q1: make a new array where the values are converted to log2 cpm
 
+data.min()
+
+data.max()
+
+data_log2 = np.log2(data - np.min(data) + .001)
+
 # Q2: Which gene has the highest expression?
+
+gene_index = np.array(range(data.shape[0]))
+
+gene_index[data.mean(1) == data.mean(1).max()]
 
 # Q3: Make a new array in which each row is sorted by expression
 
