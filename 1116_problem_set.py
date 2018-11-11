@@ -30,7 +30,26 @@ gene_index[data.mean(1) == data.mean(1).max()]
 
 # Q3: Make a new array in which each row is sorted by expression
 
+data2 = np.sort(data, axis=1)
+
+data[0:5, 0:5]
+
+data2[0:5,0:5]
+
 # Q4: Make a new array in which the samples are sorted according to average expression.  NOTE this is different than sorting each row...explain how
+
+# This is different because in Q3 each row is sorted independently of the other rows.  Q4 asks us to sort by average expression level so that the relationships within columns is preserved.  That is readings remain with their samples.
+
+sort_order = np.argsort(data.mean(0))
+
+sort_order
+sort_order.shape
+
+data3 = data[:,sort_order].copy()
+
+data3[0:5, 0:5]
+
+data3.mean(0)
 
 # Q5: what is the total number of unique values in the table?
 
@@ -40,7 +59,7 @@ gene_index[data.mean(1) == data.mean(1).max()]
 
 # Q8 calculate the standard deviation for each gene using the builtin function
 
-# Q9 calcualte the standard deviation for each gene WITHOUT using the builtin function
+# Q9 calculate the standard deviation for each gene WITHOUT using the builtin function
 
 # Q10 create a slice that contains the first 10 samples
 
