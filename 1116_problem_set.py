@@ -80,13 +80,33 @@ data_small.shape
 data_small[0:5, 0:5]
 # Q8 calculate the standard deviation for each gene using the builtin function
 
-data.std(1)
+gene_sd1 = data.std(1, ddof=1)
+
+gene_sd1[0:5]
 
 # Q9 calculate the standard deviation for each gene WITHOUT using the builtin function
 
+# first calculate the means
 
+gene_mean = data.mean(1)
+
+# then calculate the sum of squares
+
+SS = ((data - gene_mean.reshape(100,1)) ** 2).sum(1)
+
+# now divide by (n-1) and take the sqrt
+
+gene_sd2 = (SS/(data.shape[1]-1)) ** 0.5
+
+gene_sd2[0:5]
+
+all(gene_sd1 == gene_sd2)
 
 # Q10 create a slice that contains the first 10 samples
+
+my_slice = data[:, 0:10]
+
+my_slice.shape
 
 # Q11 Changing topics...generate and plot a 2D random walk (see Chapter 4.7)
 
