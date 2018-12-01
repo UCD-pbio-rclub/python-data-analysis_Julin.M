@@ -28,6 +28,9 @@ gene_index = np.array(range(data.shape[0]))
 
 gene_index[data.mean(1) == data.mean(1).max()]
 
+# better solution:
+data.mean(1).argmax()
+
 # Q3: Make a new array in which each row is sorted by expression
 
 data2 = np.sort(data, axis=1)
@@ -54,6 +57,8 @@ data3.mean(0)
 # Q5: what is the total number of unique values in the table?
 
 np.unique(data).shape
+
+len(np.unique(data))
 
 # Q6: Make a new array in which any cell that has less than 10 cpm is replaced with 0
 
@@ -109,5 +114,3 @@ my_slice = data[:, 0:10]
 my_slice.shape
 
 # Q11 Changing topics...generate and plot a 2D random walk (see Chapter 4.7)
-
-
