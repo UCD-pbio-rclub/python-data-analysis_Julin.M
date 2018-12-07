@@ -117,4 +117,150 @@ frame2['debt'] = val
 
 frame2
 
+## Index objects
 
+### hold axis labels and other meta data.
+
+
+# 5.2 essential functionality
+
+### reindex
+
+obj = pd.Series([4.5, 7.2, -5.3, 3.6], index=['d', 'b', 'a', 'c'])
+
+obj
+
+obj2 = obj.reindex(['a', 'b', 'c', 'd', 'e'])
+
+obj2
+
+#### can use forward fill to interpolate missing values
+
+obj3 = pd.Series(['blue', 'purple', 'yellow'], index=[0, 2, 4])
+
+obj3
+
+obj3.reindex(range(6), method='ffill')
+
+#### can reindix rows or columns
+
+frame = pd.DataFrame(np.arange(9).reshape((3, 3)), index=['a', 'c', 'd'], columns=['Ohio', 'Texas', 'California'])
+
+frame
+
+frame2 = frame.reindex(['a', 'b', 'c', 'd'])
+
+frame2
+
+#### for columns:
+
+states = ['Texas', 'Utah', 'California']
+
+frame.reindex(columns=states)
+
+### dropping entries from an axis...use the drop method
+
+obj = pd.Series(np.arange(5.), index=['a', 'b', 'c', 'd', 'e'])
+
+obj
+
+new_obj = obj.drop('c')
+
+new_obj
+
+#### columns:
+
+data = pd.DataFrame(np.arange(16).reshape((4, 4)),
+        index=['Ohio', 'Colorado', 'Utah', 'New York'],
+        columns=['one', 'two', 'three', 'four'])
+
+data
+
+data.drop(['Colorado', 'Ohio'])
+
+data.drop('two', axis=1)
+
+data.drop(['two', 'four'], axis='columns')
+
+obj.drop('c', inplace=True) #caution!!
+
+obj.drop
+
+## Indexing, selecting, filtering
+
+### Indexing of Series works as expected:
+
+obj = pd.Series(np.arange(4.), index=['a', 'b', 'c', 'd'])
+
+obj[obj < 2]
+
+obj[2:4]
+
+obj['b']
+
+### slicing with labels is inclusive
+
+obj['a':'c']
+
+### can also set
+
+obj['b':'c'] = 5
+
+obj
+
+### indexing DataFrames extracts columns
+
+data
+
+data['two']
+
+data[['three', 'one']]
+
+### slicing slice out rows
+
+data[1:3]
+
+### but
+
+data[3] #gives an error
+
+data['three'] #gives a column
+
+# WTF? WTF? WTF? 
+
+
+### and you can do a boolean array to select rows
+
+data[data['three'] > 5]
+
+### for more sane behavior use the .loc (for labels)  or .iloc (for integers) methods
+
+data.loc['Colorado', ['two', 'three']]
+
+data.iloc[2, [3, 0, 1]]
+
+data.iloc[2]
+
+### Arithmetic and Data Alignment
+
+s1 = pd.Series([7.3, -2.5, 3.4, 1.5], index=['a', 'c', 'd', 'e'])
+
+s2 = pd.Series([-2.1, 3.6, -1.5, 4, 3.1],index=['a', 'c', 'e', 'f', 'g'])
+
+ s1
+
+s2
+
+s1+s2
+
+df1 = pd.DataFrame(np.arange(9.).reshape((3, 3)), columns=list('bcd'),
+        index=['Ohio', 'Texas', 'Colorado'])
+
+df2 = pd.DataFrame(np.arange(12.).reshape((4, 3)), columns=list('bde'),
+        index=['Utah', 'Ohio', 'Texas', 'Oregon'])
+
+df1
+
+df2
+
+df1 + df2
