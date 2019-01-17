@@ -295,3 +295,61 @@ writer.save()
 frame.to_excel("examples.ex2a.xlsx")
 
 # so why create a writer??
+
+## 6.3 Web APIs
+
+import requests
+
+url = 'https://api.github.com/repos/pandas-dev/pandas/issues'
+
+resp = requests.get(url)
+
+data = resp.json() # the contents of resp parsed as json
+
+data[0]['title']
+
+issues = pd.DataFrame(data, columns=['number', 'title', 'labels', 'state'])
+
+issues
+
+## 6.4.  Interacting with databases
+
+#note John says we should use mysql
+# import mysql.connector
+
+import sqlite3
+
+query = "CREATE TABLE test (a VARCHAR(20), b VARCHAR(20), c REAL, d INTEGER);"
+
+con = sqlite3.connect('mydata.sqlite')
+
+con.execute(query)
+
+con.commit()
+
+data = [('Atlanta', 'Georgia', 1.25, 6),
+    ('Tallahassee', 'Florida', 2.6, 3),
+    ('Sacramento', 'California', 1.7, 5)]
+
+stmt = "INSERT INTO test VALUES(?, ?, ?, ?)"
+
+con.executemany(stmt, data)
+
+con.commit()
+
+cursor = con.execute('select * from test')
+
+cursor
+
+cursor.rowcount
+
+cursor.lastrowid
+
+cursor.description
+
+rows = cursor.fetchall()
+
+rows
+pd.DataFrame(rows, columns=[x[0] for x in cursor.description])
+
+import sqlalchemy as sqla
