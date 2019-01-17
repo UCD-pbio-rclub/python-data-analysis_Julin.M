@@ -210,3 +210,88 @@ for elt in root.INDICATOR:
 perf = pd.DataFrame(data)
 
 perf.head()
+
+## 6.2 binary data formats
+
+### pickle
+
+#Can use python's built in _pickle_ format to store in an efficient binary format.  But don't use this for long term storage.
+
+frame = pd.read_csv("examples/ex1.csv")
+
+frame
+
+frame.to_pickle("examples/ex1.pkl")
+
+pd.read_pickle("examples/ex1.pkl")
+
+### Other options
+
+# other options include HDF5 (below) and feather (Cross compatible with R!) and a few others...
+
+# HDF5 allos accessing subsets of the data on the fly and is fast
+
+frame = pd.DataFrame({'a': np.random.randn(100)})
+
+frame.head
+
+store = pd.HDFStore('mydata.h5')
+
+store['obj1'] = frame
+
+store
+
+store['obj1']
+store['obj1_col'] = frame['a']
+
+store
+store.keys()
+
+# why does he have us do both?
+
+store['obj1_col']
+
+# can store as fixed or table.  Table is slower but allows querries with convenient syntax.
+
+store.put('obj2', frame, format='table')
+
+store.select('obj2', where=['index >= 10 and index <= 15'])
+
+store.close()
+
+# pandas has tools to shortcut these operations
+
+frame.to_hdf('mydata.h5', 'obj3', format='table')
+# built in to frame methods
+
+pd.read_hdf('mydata.h5', 'obj3', where=['index < 5'])
+
+### reading excel files
+
+xlsx = pd.ExcelFile('examples/ex1.xlsx')
+
+xlsx
+
+# then parse it
+
+pd.read_excel(xlsx, 'Sheet1')
+
+# or use read_excel directly:
+
+pd.read_excel("examples/ex1.xlsx", "Sheet1")
+
+# to write, first create a writer
+
+writer = pd.ExcelWriter('examples/ex2.xlsx')
+
+# then write to it
+
+frame.to_excel(writer, "Sheet1")
+
+writer.save()
+
+# or maybe writer is not needed?
+
+frame.to_excel("examples.ex2a.xlsx")
+
+# so why create a writer??
