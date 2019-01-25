@@ -79,3 +79,20 @@ stats = pd.DataFrame(data['players'], columns=['name', 'teamAbbr', 'position', '
 
 
 stats.sort_values('seasonPts', ascending=False).head()
+
+### Min-Yao
+
+athletes = pd.read_excel('~/Downloads/WDSF Athletes on 2019-01-25.xlsx')
+
+athletes.head()
+
+athletes.Representing.value_counts().head(3)
+
+russian_athletes = athletes[athletes.Representing == 'Russia']
+
+russian_athletes.head()
+
+russian_athletes.to_excel("russian_athletes.xlsx")
+
+russian_athletes['Age group'].value_counts()
+
