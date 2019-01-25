@@ -1,6 +1,7 @@
 # user defined
 examples/
 datasets/
+russian_athletes.xlsx
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
