@@ -252,3 +252,49 @@ choices = pd.Series([5, 7, -1, 6, 4])
 draws = choices.sample(n=10, replace=True)
 
 draws
+
+### indicator and dummy variables
+
+df = pd.DataFrame({'key': ['b', 'b', 'a', 'c', 'a', 'b'],'data1': range(6)})
+
+df
+
+pd.get_dummies(df['key'])
+
+dummies = pd.get_dummies(df['key'], prefix='key')
+
+df_with_dummy = df[['data1']].join(dummies)
+
+df_with_dummy
+
+
+mnames = ['movie_id', 'title', 'genres']
+
+movies = pd.read_table('datasets/movielens/movies.dat', sep='::', header=None, names=mnames)
+movies[:10]
+
+
+all_genres = []
+
+for x in movies.genres:
+  all_genres.extend(x.split('|'))
+  
+genres = pd.unique(all_genres)
+
+
+genres
+
+zero_matrix = np.zeros((len(movies), len(genres)))
+
+dummies = pd.DataFrame(zero_matrix, columns=genres)
+
+gen = movies.genres[0]
+
+gen.split('|')
+
+dummies.columns.get_indexer(gen.split('|'))
+
+for i, gen in enumerate(movies.genres):
+  indices = dummies.columns.get_indexer(gen.split('|'))
+  dummies.iloc[i, indices] = 1
+
