@@ -215,3 +215,40 @@ pd.value_counts(cats)
 # pass your own quantiles
 
 pd.qcut(data, [0, 0.1, 0.5, 0.9, 1.])
+
+### Detecting and filtering outliers
+
+data = pd.DataFrame(np.random.randn(1000, 4))
+
+
+data.describe()
+
+col=data[2]
+
+col[np.abs(col) > 3]
+
+data[(np.abs(data) >3).any(1)]
+
+data[np.abs(data) > 3] = np.sign(data) * 3
+
+data.describe()
+
+### permutation and random sampling
+
+ df = pd.DataFrame(np.arange(5 * 4).reshape((5, 4)))
+ 
+ df
+ 
+ sampler = np.random.permutation(5)
+ 
+ sampler
+ 
+ df.take(sampler)
+ 
+df.sample(n=3) 
+
+choices = pd.Series([5, 7, -1, 6, 4])
+
+draws = choices.sample(n=10, replace=True)
+
+draws
