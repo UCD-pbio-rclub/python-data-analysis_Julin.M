@@ -298,3 +298,107 @@ for i, gen in enumerate(movies.genres):
   indices = dummies.columns.get_indexer(gen.split('|'))
   dummies.iloc[i, indices] = 1
 
+## 7.3 String manipulation
+
+val = 'a,b,  guido'
+
+val.split(',')
+
+pieces = [x.strip() for x in val.split(',')]
+
+pieces
+
+'::'.join(pieces)
+
+'guido' in val
+
+val.index("b")
+
+val.index(",")
+
+val.find("test")
+val.index("test")
+
+val.find(",")
+
+val.find("gui")
+
+val.count(",")
+
+val.replace(",", "::")
+
+### regular expressions
+
+import re
+
+text = "foo    bar\t baz  \tqux"
+
+re.split('\s+', text)
+
+regex = re.compile('\s+')
+
+regex.split(text)
+
+regex.findall(text)
+
+# findall, findsall.  search finds the first occurence.  match only matches at the beginning.
+
+text = """Dave dave@google.com
+Steve steve@gmail.com
+Rob rob@gmail.com
+Ryan ryan@yahoo.com
+"""
+
+text
+
+pattern = r'[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}'
+
+regex = re.compile(pattern, flags=re.IGNORECASE)
+
+regex.findall(text)
+
+m = regex.search(text)
+
+m
+
+text[m.start():m.end()]
+
+print(regex.match(text))
+
+print(regex.sub('REDACTED', text))
+pattern = r'([A-Z0-9._%+-]+)@([A-Z0-9.-]+)\.([A-Z]{2,4})'
+
+regex = re.compile(pattern, flags=re.IGNORECASE)
+
+m = regex.match('wesm@bright.net')
+
+m.groups()
+
+regex.findall(text)
+
+print(regex.sub(r'Username: \1, Domain: \2, Suffix: \3', text))
+
+## 7.4 Vectorized string functions
+
+data = {'Dave': 'dave@google.com', 'Steve': 'steve@gmail.com', 'Rob': 'rob@gmail.com', 'Wes': np.nan}
+
+data = pd.Series(data)
+
+data
+
+data.isnull()
+
+data.str.contains('gmail')
+
+pattern = r'([A-Z0-9._%+-]+)@([A-Z0-9.-]+)\.([A-Z]{2,4})'
+
+data.str.findall(pattern, flags=re.IGNORECASE)
+
+matches = data.str.findall(pattern, flags=re.IGNORECASE).str[0]
+
+matches
+
+matches.str.get(1)
+
+data.str[:5]
+
