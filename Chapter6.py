@@ -353,3 +353,7 @@ rows
 pd.DataFrame(rows, columns=[x[0] for x in cursor.description])
 
 import sqlalchemy as sqla
+
+db = sqla.create_engine('sqlite:///mydata.sqlite')
+
+pd.read_sql('select * from test', db)
