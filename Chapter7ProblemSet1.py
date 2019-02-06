@@ -46,6 +46,8 @@ keep = [not (df.b.isnull()[x] or df.f.isnull()[x]) for x in range(0,10)]
 
 df[keep]
 
+df.dropna(subset=['b', 'f'])
+
 ## Min Yao
 
 # Import my RNA-Seq CPM data from 'Expression Browser_CPM_practice.xlsx' file. Please made the Itag number become the row index. How many genes in this data set?
@@ -63,15 +65,23 @@ cpm = cpm.drop("Name", axis=1)
 cpm.head()
 # Please replace all 0 with NA.
 
-cpm.replace(0, np.nan, inplace = True)
+cpm = cpm.replace(0, np.nan, inplace=True)
 
-cpm.head()
+cpm.shape
+
+cpm
+
+cpm_replace.shape
+
+cpm_replace.head()
 
 #We want to remove the genes that have no expression in all samples. How many genes left after we remove these genes.
 
-cpmfilter = cpm[cpm.isna().sum(axis=1) > 0]
+#cpmfilter = cpm[not (cpm.isna(axis=1).all()]
 
-cpmfilter.head()
+cpm_replace_drop = cpm_replace.dropna(how='all')
 
-cpmfilter.shape
+cpm_replace_drop.head()
+
+cpm_replace_drop.shape
 
