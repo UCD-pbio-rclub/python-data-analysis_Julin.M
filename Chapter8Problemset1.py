@@ -169,6 +169,7 @@ mir2.head()
 
 mir2.index
 mir2.loc[slice(None)]
-mir2.loc[ : , 'novel']
+
+mir2.query('category == "known"')
 
 mir2.loc[( : , 'novel')]

@@ -23,20 +23,20 @@ page = 1
 while True:
     parameters = {"page": page, "per_page": "50"}
     resp = requests.get(url, params=parameters)
-    #print(resp.url)
-    #print(resp)
     if not resp.json():
         break
     breweries = breweries.append(pd.DataFrame(resp.json()))
-    #print(breweries.tail(1)['name'])
     page += 1
-
 
 len(breweries)
 
-
 test = "test"
 
-regex = re.compile("(.{1}).*/1$")
+regex = re.compile("(.{1}).*\\1$")
 
 print(regex.match(test))
+
+
+breweries_small = breweries[
+[regex.match(s) for s in breweries.state]
+]
