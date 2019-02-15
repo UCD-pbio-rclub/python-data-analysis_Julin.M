@@ -142,3 +142,33 @@ pop2012total.head()
 pop2012total['density'] = pop2012total.population / pop2012total['area (sq. mi)']
 
 pop2012total.head()
+
+# Rie
+
+# Read csv file, named "Rie_Chap8part1Data.021319.csv"(https://github.com/UCD-pbio-rclub/python-data-analysis_RieU/blob/master/Rie_Chap8part1Data.021319.csv). Set two indexes for the columns 'miR' and 'category'
+
+# Select the data based on the category (known and novel). Hint: I reshape the data first.
+
+mir = pd.read_csv("https://github.com/UCD-pbio-rclub/python-data-analysis_RieU/raw/master/Rie_Chap8part1Data.021319.csv")
+
+mir.head()
+
+mir1 = mir.set_index(['category', 'miR'])
+
+mir1.head()
+
+mir1.index
+
+mir1.loc[('known')].head()
+
+mir1.loc[('novel')].head()
+
+mir2 = mir.set_index(['miR', 'category'])
+
+mir2.head()
+
+mir2.index
+mir2.loc[slice(None)]
+mir2.loc[ : , 'novel']
+
+mir2.loc[( : , 'novel')]
