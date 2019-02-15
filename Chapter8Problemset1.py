@@ -89,6 +89,22 @@ newcols.columns = ['genotype', 'treatment', 'sample_number']
 
 newcols.head()
 
-cpm.columns = pd.MultiIndex(newcols)
+
+cpm.columns = pd.MultiIndex.from_frame(newcols)
 
 cpm.head()
+
+
+chrom = cpm.index.str.extract(r'(\d\d)g')[0]
+
+cpm.index = [cpm.index, chrom]
+
+cpm.index.names = ['gene', 'chrom']
+
+cpm.shape
+
+cpm.head()
+
+cpm_means = cpm.mean(level=['genotype', 'treatment'], axis=1)
+
+cpm_means.head()
