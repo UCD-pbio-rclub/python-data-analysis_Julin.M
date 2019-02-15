@@ -162,3 +162,112 @@ df1
 df2
 
 df1.combine_first(df2)
+
+## reshape with hierarchical indexing
+
+# stack from columns to rows
+
+# unstack rotates or pivots rows into columns
+
+data = pd.DataFrame(
+   np.arange(6).reshape((2, 3)),
+   index=pd.Index(['Ohio', 'Colorado'], name='state'),
+   columns=pd.Index(['one', 'two', 'three'], name='number'))
+
+data
+
+result = data.stack() # column names become a column and values become a column
+
+result # a hierarchically arranged series
+
+result.unstack() #innermost level, or "number"
+
+result.unstack(0)
+
+result.unstack('state')
+
+df = pd.DataFrame({'left': result, 'right': result + 5},
+                  columns=pd.Index(['left', 'right'], name='side'))
+
+df
+
+df.unstack("state")
+
+df
+
+df.unstack('state').stack('side')
+
+# long to wide
+
+data = pd.read_csv('examples/macrodata.csv')
+
+data.head()
+
+periods = pd.PeriodIndex(year=data.year, quarter=data.quarter,
+                         name='date')
+
+periods
+
+columns = pd.Index(['realgdp', 'infl', 'unemp'], name='item')
+
+columns
+
+data = data.reindex(columns=columns)
+
+data.head()
+
+data.index = periods.to_timestamp('D', 'end')
+
+data.head()
+
+ldata = data.stack().reset_index().rename(columns={0: 'value'})
+
+# "0" in "rename because that is the first unamed column and gets 0 by default
+
+ldata[:10]
+
+pivoted = ldata.pivot('date', 'item', 'value')
+
+# first argument is what should be row index, 
+# second is col index, and last is what to fill with
+
+pivoted.head()
+
+# if more than one value column:
+
+ldata['value2'] = np.random.randn(len(ldata))
+
+ldata[:10]
+
+pivoted = ldata.pivot('date', 'item')
+
+pivoted.head() # hierarchical columns
+
+# sane as creating a hierarchical index and then unstacking
+
+ldata.set_index(['date', 'item']).unstack('item').head()
+
+# pivot from wide to long
+
+df = pd.DataFrame({'key': ['foo', 'bar', 'baz'],
+                   'A': [1, 2, 3],
+                   'B': [4, 5, 6],
+                   'C': [7, 8, 9]})
+
+df
+
+melted = pd.melt(df, ['key'])
+
+melted
+
+reshaped = melted.pivot('key', 'variable', 'value')
+
+reshaped
+
+reshaped.reset_index() #if we want the key to be a column
+
+pd.melt(df, id_vars=['key'], value_vars=['A', 'B'])
+
+pd.melt(df, value_vars=['A', 'B', 'C'])
+
+pd.melt(df, value_vars=['key', 'A', 'B'])
