@@ -108,3 +108,37 @@ cpm.head()
 cpm_means = cpm.mean(level=['genotype', 'treatment'], axis=1)
 
 cpm_means.head()
+
+# Joel
+
+population = pd.read_csv("https://raw.githubusercontent.com/jakevdp/data-USstates/master/state-population.csv")
+
+areas = pd.read_csv("https://raw.githubusercontent.com/jakevdp/data-USstates/master/state-areas.csv")
+
+stateabrevs = pd.read_csv("https://raw.githubusercontent.com/jakevdp/data-USstates/master/state-abbrevs.csv")
+
+# These datasets contain information on US population by state/region over a period of time, as well as the state's area.
+
+# Calculate the population density for the year 2012 (using the total population)
+
+population.head()
+
+areas.head()
+
+stateabrevs.head()
+
+areas = pd.merge(areas, stateabrevs)
+
+areas.head()
+
+pop = pd.merge(areas, population, left_on = 'abbreviation', right_on = "state/region").drop('state/region', axis=1)
+
+pop.head()
+
+pop2012total = pop.copy()[(pop.ages == 'total') & (pop.year == 2012)]
+
+pop2012total.head()
+
+pop2012total['density'] = pop2012total.population / pop2012total['area (sq. mi)']
+
+pop2012total.head()
