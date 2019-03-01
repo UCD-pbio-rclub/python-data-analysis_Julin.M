@@ -241,3 +241,21 @@ plt.title('Changes in log %s versus log %s' % ('m1', 'unemp'))
 
 sns.pairplot(trans_data, diag_kind='kde', plot_kws={'alpha': 0.2})
 
+# %% facets
+
+# note: factorplot renamed to catplot
+sns.catplot(x='day', y='tip_pct', hue='time', col='smoker',
+               kind='bar', data=tips[tips.tip_pct < 1])
+
+# %% faceted plot with row and columns
+
+sns.catplot(x='day', y='tip_pct', row='time',
+               hue='time',
+               col='smoker',
+               kind='bar', data=tips[tips.tip_pct < 1])
+
+# %% boxplots
+
+sns.catplot(x='tip_pct', y='day', kind='box',
+               data=tips[tips.tip_pct < 0.5])
+
