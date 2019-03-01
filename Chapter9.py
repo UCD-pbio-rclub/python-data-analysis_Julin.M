@@ -1,5 +1,6 @@
 # Chapter 9 part 1 notes
 
+# %%
 import pandas as pd
 import numpy as np
 
@@ -7,14 +8,16 @@ import matplotlib.pyplot as plt
 
 # %matplotlib
 
+# %%
 data = np.arange(10)
 
 data
 
 plt.plot(data)
 
+# %%
 # plots are inside of figures
-# creat a figure object
+# create a figure object
 
 fig = plt.figure()
 
@@ -26,29 +29,36 @@ ax3 = fig.add_subplot(2, 2, 3)
 
 fig
 
+# %%
+
 plt.plot(np.random.randn(50).cumsum(), 'k--')
 
+# %%
 #run these together to get on same plot.
 fig = plt.figure()
 ax1 = fig.add_subplot(2, 2, 1)
 ax2 = fig.add_subplot(2, 2, 2)
 ax3 = fig.add_subplot(2, 2, 3)
+
 plt.plot(np.random.randn(50).cumsum(), 'k--')
 #adds to last subplot worked on
 
+# %% 
+
+# What is this notation?
 _ = ax1.hist(np.random.randn(100), bins=20, color='k', alpha=0.3)
 
 ax2.scatter(np.arange(30), np.arange(30) + 3 * np.random.randn(30))
 
 fig
 
-# create subplots all at once
+# %% create subplots all at once
 
 fig, axes = plt.subplots(2, 3)
 
 axes
 
-# adjusting spacing between subplots
+# %% adjusting spacing between subplots
 plt.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=None, hspace=None)
  
 fig, axes = plt.subplots(2, 2, sharex=True, sharey=True)
@@ -57,7 +67,7 @@ for i in range(2):
         axes[i, j].hist(np.random.randn(500), bins=50, color='k', alpha=0.5)
 plt.subplots_adjust(wspace=0, hspace=0)
 
-# colors, margins, styles
+# %% colors, margins, styles
 
 from numpy.random import randn
 
@@ -69,7 +79,7 @@ plt.plot(data, 'k--', label='Default')
 plt.plot(data, 'k-', drawstyle='steps-post', label='steps-post')
 plt.legend(loc='best')
 
-# ticks, labels, legends
+# %% ticks, labels, legends
 
 fig = plt.figure()
 ax = fig.add_subplot(1, 1, 1)
@@ -81,7 +91,7 @@ ax.set_title('My first matplotlib plot')
 ax.set_xlabel('Stages')
 
 
-# alternative
+# %% alternative
 
 props = {
     'title': 'My first matplotlib plot',
@@ -89,7 +99,7 @@ props = {
 }
 ax.set(**props)  # what are the **?
 
-# legends
+# %% legends
 
 fig = plt.figure()
 ax = fig.add_subplot(1, 1, 1)
@@ -98,7 +108,7 @@ ax.plot(randn(1000).cumsum(), 'k--', label='two')
 ax.plot(randn(1000).cumsum(), 'k+', label='three')
 ax.legend(loc='best')
 
-# annotation
+# %% annotation
 
 # use .text or .arrow or .annotate
 
@@ -131,6 +141,7 @@ ax.set_ylim([600, 1800])
 
 ax.set_title('Important dates in the 2008-2009 financial crisis')
 
+# %% shapes
 fig = plt.figure()
 ax = fig.add_subplot(1, 1, 1)
 
@@ -145,24 +156,27 @@ ax.add_patch(pgon)
 
 # pandas and seaborn
 
-# default series and dataframe methods
+# %% default series method
 
 s = pd.Series(np.random.randn(10).cumsum(), index=np.arange(0, 100, 10))
 
 s.plot()
 
+# %% default data frame method
 df = pd.DataFrame(np.random.randn(10, 4).cumsum(0),
                   columns=['A', 'B', 'C', 'D'],
                   index=np.arange(0, 100, 10))
                   
 df.plot()
 
+# %% combining dataframe methods and subplots
 fig, axes = plt.subplots(2, 1)
 data = pd.Series(np.random.rand(16), index=list('abcdefghijklmnop'))
 data.plot.bar(ax=axes[0], color='k', alpha=0.7)
 data.plot.barh(ax=axes[1], color='k', alpha=0.7)
 
 
+# %% df barplot method
 df = pd.DataFrame(np.random.rand(6, 4),
                       index=['one', 'two', 'three', 'four', 'five', 'six'],
                       columns=pd.Index(['A', 'B', 'C', 'D'], name='Genus'))
@@ -171,6 +185,8 @@ df
 df.plot.bar()
 
 df.plot.barh(stacked=True, alpha=0.5)
+
+# %% crosstab method
 
 tips = pd.read_csv('examples/tips.csv')
 
@@ -188,6 +204,8 @@ party_pcts
 
 party_pcts.plot.bar()
 
+# %% seaborn
+
 import seaborn as sns
 
 tips['tip_pct'] = tips['tip'] / (tips['total_bill'] - tips['tip'])
@@ -196,22 +214,22 @@ tips.head()
 
 sns.barplot(x='tip_pct', y='day', data=tips, orient='h')
 
-#historgrams, etc
+# histograms, etc
 
-# using series method
+# %% histograms using series method
 
 tips['tip_pct'].plot.hist(bins=50)
 
 tips['tip_pct'].plot.density()
 
-# or with seaborn
+# %% histograms with seaborn
 
 comp1 = np.random.normal(0, 1, size=200)
 comp2 = np.random.normal(10, 2, size=200)
 values = pd.Series(np.concatenate([comp1, comp2]))
 sns.distplot(values, bins=100, color='k')
 
-# scatter plots
+# %% scatter plots
 
 macro = pd.read_csv('examples/macrodata.csv')
 data = macro[['cpi', 'm1', 'tbilrate', 'unemp']]
